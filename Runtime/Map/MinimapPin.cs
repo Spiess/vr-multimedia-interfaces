@@ -42,7 +42,7 @@ namespace Map
                 {
                     _positionSpherical =
                         MathUtilities.CartesianToSpherical(
-                            minimap.minimapPitch.InverseTransformPoint(boundTo.transform.position));
+                            minimap.transform.InverseTransformPoint(boundTo.transform.position));
                 
                     transform.localPosition =
                         MathUtilities.SphericalToCartesian(new Vector3(.5f, _positionSpherical.y,

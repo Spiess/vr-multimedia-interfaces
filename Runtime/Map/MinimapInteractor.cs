@@ -39,7 +39,7 @@ namespace Map
                 if (_hovering && !_dragging)
                 {
                     _startPositionSpherical = PositionSpherical();
-                    _startRotation = _activeMinimap.minimapPitch.localRotation;
+                    _startRotation = _activeMinimap.transform.localRotation;
                     _dragging = true;
                 }
             };
@@ -83,14 +83,14 @@ namespace Map
             if (_dragging)
             {
                 // update interactor axis
-                _activeMinimap.interactorAxis.LookAt(transform.position);
-                
-                var delta = PositionSpherical() - _startPositionSpherical;
-                _activeMinimap.minimapTransform.Rotate(_activeMinimap.minimapTransform.up,
-                    MathUtilities.RadianToDegrees(delta.z));
-                _activeMinimap.minimapPitch.localRotation = _startRotation;
-                _activeMinimap.minimapPitch.Rotate(_activeMinimap.interactorAxis.right,
-                    MathUtilities.RadianToDegrees(delta.y), Space.World);
+                // _activeMinimap.interactorAxis.LookAt(transform.position);
+                //
+                // var delta = PositionSpherical() - _startPositionSpherical;
+                // _activeMinimap.minimapTransform.Rotate(_activeMinimap.minimapTransform.up,
+                //     MathUtilities.RadianToDegrees(delta.z));
+                // _activeMinimap.minimapPitch.localRotation = _startRotation;
+                // _activeMinimap.minimapPitch.Rotate(_activeMinimap.interactorAxis.right,
+                //     MathUtilities.RadianToDegrees(delta.y), Space.World);
             }
         }
 
@@ -167,7 +167,7 @@ namespace Map
             }
 
             return MathUtilities.CartesianToSpherical(
-                _activeMinimap.minimapTransform.InverseTransformPoint(transform.position));
+                _activeMinimap.transform.InverseTransformPoint(transform.position));
         }
     }
 }
