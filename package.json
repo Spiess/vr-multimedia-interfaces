@@ -1,0 +1,18 @@
+{
+  "name": "ch.unibas.vr-multimedia-interfaces",
+  "version": "0.0.1",
+  "displayName": "VR Multimedia Interfaces",
+  "description": "This package implements several multimedia interfaces for virtual reality.",
+  "unity": "2019.4",
+  "dependencies": {
+    "com.mapbox.mapbox-sdk": "2.1.1"
+  },
+  "keywords": [
+    "VR",
+    "Multimedia Retrieval"
+  ],
+  "author": {
+    "name": "Florian Spiess and Milan van Zanten",
+    "email": "florian.spiess@unibas.ch"
+  }
+}

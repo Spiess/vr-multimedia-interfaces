@@ -1,0 +1,16 @@
+{
+    "name": "unibas.vr-multimedia-interfaces.Runtime",
+    "references": [
+        "GUID:3d40fdbb682232f488c8e0a8aaa10996",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
