@@ -1,4 +1,5 @@
 using UnityEngine;
+using Util;
 
 namespace Map
 {
@@ -37,7 +38,10 @@ namespace Map
     {
       if (_minimap != null)
       {
-        Debug.Log("Dropped on Minimap!");
+        var spherical =
+          MathUtilities.CartesianToSpherical(_minimap.transform.InverseTransformPoint(transform.position));
+        var coordinates = new Vector2(90 - spherical.y / Mathf.PI * 180, -spherical.z / Mathf.PI * 180);
+        _minimap.MoveTo(coordinates);
       }
     }
   }
