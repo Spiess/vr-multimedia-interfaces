@@ -84,6 +84,8 @@ namespace Map
         private List<Pin> _pins = new List<Pin>();
 
         private AbstractMap _mapboxRoot;
+
+        private Vector3 _previousPosition;
         
         private static readonly int
             MapCenter = Shader.PropertyToID("MapCenter"),
@@ -111,8 +113,18 @@ namespace Map
         private void Update()
         {
             // move the map to the new velocity center position and reset the velocity center.
-            Coordinates = PositionToCoordinates(velocityCenter.position);
-            velocityCenter.position = transform.position;
+            if (velocityCenter.transform.localPosition.sqrMagnitude > 1e-5f)
+            {
+                // Calculate world space coordinates from mapbox root rather than real world space to counteract weirdness
+                var rootSpace = _mapboxRoot.Root.transform.TransformPoint(velocityCenter.transform.localPosition);
+                Coordinates = PositionToCoordinates(rootSpace);
+            }
+            velocityCenter.transform.localPosition = Vector3.zero;
+            if (_previousPosition != transform.position)
+            {
+                UpdateTileRenderers();
+            }
+            _previousPosition = transform.position;
         }
 
         /// <summary>
