@@ -38,11 +38,12 @@ namespace Map
     {
       if (_minimap != null)
       {
-        // Move minimap to the location where the pin was dropped
+        // Move map to the location where the pin was dropped
         var spherical =
           MathUtilities.CartesianToSpherical(_minimap.transform.InverseTransformPoint(transform.position));
         var coordinates = new Vector2(90 - spherical.y / Mathf.PI * 180, -spherical.z / Mathf.PI * 180);
         _minimap.MoveTo(coordinates);
+        // TODO: Destroy this pin or attach it to the minimap
       }
     }
   }

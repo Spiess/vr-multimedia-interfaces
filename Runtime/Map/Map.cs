@@ -92,6 +92,8 @@ namespace Map
             MaxDistance = Shader.PropertyToID("MaxDistance"),
             FalloffRange = Shader.PropertyToID("FalloffRange");
 
+        public float colliderDepth = 10;
+
         private void Start()
         {
             _mapboxRoot = GetComponentInChildren<AbstractMap>();
@@ -102,7 +104,7 @@ namespace Map
             {
                 var size = (maxDistance + falloffRange) * 2;
                 var scale = transform.localScale;
-                mapCollider.size = new Vector3(size / scale.x, 1, size / scale.z);
+                mapCollider.size = new Vector3(size / scale.x, colliderDepth, size / scale.z);
             }
 
             // TODO: use AbstractMap::SetTileMaterial instead of updating materials manually
@@ -112,6 +114,22 @@ namespace Map
 
         private void Update()
         {
+            // Handle interactions
+            switch (_interactors.Count)
+            {
+                case 1: // Dragging
+                    var interactor = _interactors.First();
+                    Drag(interactor.Key.position, interactor.Value);
+                    break;
+                case 2:
+                    break;
+            }
+
+            foreach (var interactor in _interactors.Keys.ToList())
+            {
+                _interactors[interactor] = interactor.position;
+            }
+            
             // move the map to the new velocity center position and reset the velocity center.
             if (velocityCenter.transform.localPosition.sqrMagnitude > 1e-5f)
             {
@@ -154,7 +172,7 @@ namespace Map
             Gizmos.color = Color.white;
             var size = (maxDistance + falloffRange) * 2;
             var t = transform;
-            Gizmos.DrawWireCube(t.position, new Vector3(size, t.localScale.y, size));
+            Gizmos.DrawWireCube(t.position, new Vector3(size, t.localScale.y * colliderDepth, size));
         }
 
         private void OnDrawGizmosSelected()
@@ -163,8 +181,40 @@ namespace Map
             Gizmos.color = Color.white;
             var size = maxDistance * 2;
             var t = transform;
-            Gizmos.DrawWireCube(t.position, new Vector3(size, t.localScale.y, size));
+            Gizmos.DrawWireCube(t.position, new Vector3(size, t.localScale.y * colliderDepth, size));
         }
+
+        #region Interactions
+
+        /// <summary>
+        /// List of currently active interactors and their previous positions
+        /// </summary>
+        private Dictionary<Transform, Vector3> _interactors = new Dictionary<Transform, Vector3>();
+
+        public void InteractionChange(Transform interactor, bool active)
+        {
+            if (active)
+            {
+                if (_interactors.ContainsKey(interactor))
+                {
+                    return;
+                }
+                _interactors.Add(interactor, interactor.position);
+            }
+            else if (_interactors.ContainsKey(interactor))
+            {
+                _interactors.Remove(interactor);
+            }
+        }
+
+        private void Drag(Vector3 currentPosition, Vector3 previousPosition)
+        {
+            var startCoordinates = PositionToCoordinates(previousPosition);
+            var endCoordinates = PositionToCoordinates(currentPosition);
+            Translate(startCoordinates - endCoordinates);
+        }
+
+        #endregion
 
         #region Translation and Zoom
         
