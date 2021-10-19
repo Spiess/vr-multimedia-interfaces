@@ -126,6 +126,13 @@ namespace Map
           Drag(interactor.Key.position, interactor.Value);
           break;
         case 2:
+          var interactor0 = _interactors.First();
+          var interactor1 = _interactors.Last();
+          var currentDistance = Vector3.Distance(interactor0.Key.position, interactor1.Key.position);
+          var previousDistance = Vector3.Distance(interactor0.Value, interactor1.Value);
+                
+          // zoom the map by log2 (because the map zoom is determined by 2^zoom) of the relative scaling change
+          DeltaZoom(Mathf.Log(currentDistance / previousDistance, 2));
           break;
       }
 
