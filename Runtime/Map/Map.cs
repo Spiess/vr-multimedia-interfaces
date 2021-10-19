@@ -126,13 +126,23 @@ namespace Map
           Drag(interactor.Key.position, interactor.Value);
           break;
         case 2:
+        {
           var interactor0 = _interactors.First();
           var interactor1 = _interactors.Last();
-          var currentDistance = Vector3.Distance(interactor0.Key.position, interactor1.Key.position);
-          var previousDistance = Vector3.Distance(interactor0.Value, interactor1.Value);
-                
+          var currentPosition0 = interactor0.Key.position;
+          var currentPosition1 = interactor1.Key.position;
+          var previousPosition0 = interactor0.Value;
+          var previousPosition1 = interactor1.Value;
+
+          var currentDistance = Vector3.Distance(currentPosition0, currentPosition1);
+          var previousDistance = Vector3.Distance(previousPosition0, previousPosition1);
+
           // zoom the map by log2 (because the map zoom is determined by 2^zoom) of the relative scaling change
           DeltaZoom(Mathf.Log(currentDistance / previousDistance, 2));
+
+          // Move the map by the center of hands
+          Drag((currentPosition0 + currentPosition1) / 2, (previousPosition0 + previousPosition1) / 2);
+        }
           break;
       }
 
