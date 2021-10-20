@@ -113,7 +113,8 @@ namespace Map
 
       // TODO: use AbstractMap::SetTileMaterial instead of updating materials manually
       _mapboxRoot.OnUpdated += UpdateTileRenderers;
-      UpdateTileRenderers();
+      // Make sure that the map shows the correct starting Zoom level (unsure why this is necessary)
+      Zoom = Zoom;
     }
 
     private void Update()
