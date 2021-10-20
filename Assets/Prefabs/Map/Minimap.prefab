@@ -162,7 +162,7 @@ MonoBehaviour:
       scalingType: 1
       unityTileSize: 1
     loadingTexture: {fileID: 0}
-    tileMaterial: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+    tileMaterial: {fileID: 2100000, guid: 50459b5cce1ff9e4f9c937bf00e6d857, type: 2}
   _initializeOnStart: 1
   _imagery:
     _layerProperty:
