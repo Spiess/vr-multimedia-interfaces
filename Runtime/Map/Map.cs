@@ -67,7 +67,7 @@ namespace Map
       set => _mapboxRoot.UpdateMap(new Vector2d(value.x, value.y));
     }
 
-    private readonly List<UniversalPin> _pins = new List<UniversalPin>();
+    private readonly Dictionary<UniversalPin, Vector2> _pins = new Dictionary<UniversalPin, Vector2>();
 
     private AbstractMap _mapboxRoot;
 
@@ -150,6 +150,9 @@ namespace Map
       }
 
       _previousPosition = transform.position;
+
+      // Update pins
+      UpdatePins();
     }
 
     /// <summary>
@@ -293,12 +296,20 @@ namespace Map
 
     public void AddPin(UniversalPin pin)
     {
-      _pins.Add(pin);
+      _pins.Add(pin, PositionToCoordinates(pin.transform.position));
     }
 
     public void RemovePin(UniversalPin pin)
     {
       _pins.Remove(pin);
+    }
+
+    private void UpdatePins()
+    {
+      foreach (var pin in _pins.Keys)
+      {
+        pin.transform.position = CoordinatesToPosition(_pins[pin]);
+      }
     }
 
     #endregion
