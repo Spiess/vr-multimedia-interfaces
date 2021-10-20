@@ -34,11 +34,6 @@ namespace Map
     public float falloffRange;
 
     /// <summary>
-    /// The material that blends out the map using <see cref="maxDistance"/> and <see cref="falloffRange"/>.
-    /// </summary>
-    [SerializeField] protected Material mapTileMaterial;
-
-    /// <summary>
     /// The <c>velocityCenter</c> is used to smoothly pan the map. <see cref="MapInteractor"/>s add a force to this
     /// when letting go.
     /// </summary>
