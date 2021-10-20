@@ -111,8 +111,9 @@ namespace Map
         mapCollider.size = new Vector3(size / scale.x, colliderDepth, size / scale.z);
       }
 
-      // TODO: use AbstractMap::SetTileMaterial instead of updating materials manually
-      _mapboxRoot.OnUpdated += UpdateTileRenderers;
+      // Initialize global shader values
+      UpdateTileShader();
+
       // Make sure that the map shows the correct starting Zoom level (unsure why this is necessary)
       Zoom = Zoom;
     }
@@ -163,26 +164,23 @@ namespace Map
       velocityCenter.transform.localPosition = Vector3.zero;
       if (_previousPosition != transform.position)
       {
-        UpdateTileRenderers();
+        UpdateTileShader();
       }
 
       _previousPosition = transform.position;
     }
 
     /// <summary>
-    /// Updates custom shader variables to produce map fade effect
+    /// Updates custom shader variables to produce map fade effect.
+    ///
+    /// Note: Values are changed globally. Would require fundamental changes to allow multiple <see cref="Map"/>
+    /// instances.
     /// </summary>
-    private void UpdateTileRenderers()
+    private void UpdateTileShader()
     {
-      foreach (Transform tile in _mapboxRoot.transform)
-      {
-        if (tile.TryGetComponent<MeshRenderer>(out var tileRenderer))
-        {
-          tileRenderer.material.SetVector(MapCenter, transform.position);
-          tileRenderer.material.SetFloat(MaxDistance, maxDistance);
-          tileRenderer.material.SetFloat(FalloffRange, falloffRange);
-        }
-      }
+      Shader.SetGlobalVector(MapCenter, transform.position);
+      Shader.SetGlobalFloat(MaxDistance, maxDistance);
+      Shader.SetGlobalFloat(FalloffRange, falloffRange);
     }
 
     private void OnDrawGizmos()
