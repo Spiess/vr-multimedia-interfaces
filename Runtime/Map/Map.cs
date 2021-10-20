@@ -276,7 +276,7 @@ namespace Map
     /// <returns>The position in world space.</returns>
     public Vector3 CoordinatesToPosition(Vector2 coordinates)
     {
-      return _mapboxRoot.GeoToWorldPosition(new Vector2d(coordinates.x, coordinates.y), false);
+      return CoordinatesToPosition(coordinates.x, coordinates.y);
     }
 
     /// <summary>
@@ -293,6 +293,15 @@ namespace Map
     #endregion
 
     #region Pins
+
+    /// <summary>
+    /// Returns a list of the coordinates of all pins currently attached to the map.
+    /// </summary>
+    /// <returns>List of coordinates in (latitude, longitude).</returns>
+    public List<Vector2> GetPinCoordinates()
+    {
+      return _pins.Values.ToList();
+    }
 
     public void AddPin(UniversalPin pin)
     {
