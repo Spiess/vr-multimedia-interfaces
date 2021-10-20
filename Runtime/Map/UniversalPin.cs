@@ -54,6 +54,11 @@ namespace Map
       {
         _map.RemovePin(this);
       }
+
+      if (_minimap != null)
+      {
+        _minimap.RemovePin(this);
+      }
     }
 
     public void OnDrop()
@@ -65,7 +70,7 @@ namespace Map
           MathUtilities.CartesianToSpherical(_minimap.transform.InverseTransformPoint(transform.position));
         var coordinates = new Vector2(90 - spherical.y / Mathf.PI * 180, -spherical.z / Mathf.PI * 180);
         _minimap.MoveTo(coordinates);
-        // TODO: Destroy this pin or attach it to the minimap
+        _minimap.AddPin(this);
       }
       else if (_map != null)
       {
