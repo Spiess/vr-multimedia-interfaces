@@ -308,7 +308,7 @@ namespace Map
     {
       foreach (var pin in _pins.Keys)
       {
-        pin.transform.position = CoordinatesToPosition(_pins[pin]);
+        pin.transform.position = CoordinatesToPosition(_pins[pin]) + transform.up * .01f;
       }
     }
 
