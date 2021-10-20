@@ -308,7 +308,15 @@ namespace Map
     {
       foreach (var pin in _pins.Keys)
       {
-        pin.transform.position = CoordinatesToPosition(_pins[pin]) + transform.up * .01f;
+        var position = CoordinatesToPosition(_pins[pin]);
+        var maximumPinDistance = maxDistance + falloffRange;
+        if (Vector3.Distance(position, transform.position) > maximumPinDistance)
+        {
+          var mapPosition = transform.position;
+          position = (position - mapPosition).normalized * maximumPinDistance + mapPosition;
+        }
+
+        pin.transform.position = position + transform.up * .01f;
       }
     }
 
