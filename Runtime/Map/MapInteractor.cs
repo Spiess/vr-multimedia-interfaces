@@ -173,7 +173,7 @@ namespace Map
                 if (_activeMap != null && closestPin != null && closestPin.HasFreeNeighbour())
                 {
                     _draggingPin = InstantiatePin(transform);
-                    _activeMap.AddPin(_draggingPin);
+                    // _activeMap.AddPin(_draggingPin);
                     _draggingPin.transform.parent = _activeMap.transform;
                     
                     if (closestPin.next == null)
@@ -242,7 +242,7 @@ namespace Map
                 
                 if (_draggingPin != null)
                 {
-                    _activeMap.AddPin(_draggingPin);
+                    // _activeMap.AddPin(_draggingPin);
                     _draggingPin.transform.parent = _activeMap.transform;
                 }
             }
@@ -276,7 +276,7 @@ namespace Map
                 
                 if (_draggingPin != null)
                 {
-                    map.RemovePin(_draggingPin);
+                    // map.RemovePin(_draggingPin);
                     _draggingPin.transform.parent = transform;
                 }
             }

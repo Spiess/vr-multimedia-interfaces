@@ -8,12 +8,17 @@ namespace Map
     public Transform pinModel;
 
     private Minimap _minimap;
+    private Map _map;
 
     private void Update()
     {
       if (_minimap != null)
       {
         pinModel.LookAt(_minimap.transform);
+      }
+      else if (_map != null)
+      {
+        pinModel.rotation = _map.transform.rotation * Quaternion.Euler(90, 0, 0);
       }
     }
 
@@ -23,6 +28,10 @@ namespace Map
       {
         _minimap = minimap;
       }
+      else if (other.TryGetComponent<Map>(out var map))
+      {
+        _map = map;
+      }
     }
 
     private void OnTriggerExit(Collider other)
@@ -30,6 +39,11 @@ namespace Map
       if (_minimap != null && _minimap.transform == other.transform)
       {
         _minimap = null;
+        pinModel.localRotation = Quaternion.identity;
+      }
+      else if (_map != null && _map.transform == other.transform)
+      {
+        _map = null;
         pinModel.localRotation = Quaternion.identity;
       }
     }

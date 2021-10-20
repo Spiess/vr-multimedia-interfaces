@@ -67,20 +67,7 @@ namespace Map
       set => _mapboxRoot.UpdateMap(new Vector2d(value.x, value.y));
     }
 
-    /// <summary>
-    /// The list of all pins currently on this map.
-    /// </summary>
-    public List<Pin> Pins => _pins;
-
-    /// <summary>
-    /// The list of all pins currently on this map and inside its view bounds.
-    /// </summary>
-    public List<Pin> PinsInMapBounds
-    {
-      get { return _pins.Where(pin => pin.inMapBounds).ToList(); }
-    }
-
-    private List<Pin> _pins = new List<Pin>();
+    private readonly List<UniversalPin> _pins = new List<UniversalPin>();
 
     private AbstractMap _mapboxRoot;
 
@@ -304,16 +291,14 @@ namespace Map
 
     #region Pins
 
-    public void AddPin(Pin pin)
+    public void AddPin(UniversalPin pin)
     {
       _pins.Add(pin);
-      pin.map = this;
     }
 
-    public void RemovePin(Pin pin)
+    public void RemovePin(UniversalPin pin)
     {
       _pins.Remove(pin);
-      pin.map = null;
     }
 
     #endregion
