@@ -916,6 +916,7 @@ MonoBehaviour:
   falloffRange: 0.01
   mapTileMaterial: {fileID: 2100000, guid: 4b3c10255f0fe2d4582fe0764de85a8f, type: 2}
   velocityCenter: {fileID: 8958765313762744839}
+  colliderDepth: 10
 --- !u!65 &8958765314381148902
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1810,6 +1811,10 @@ PrefabInstance:
       propertyPath: _tileProvider
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8610454541067591575, guid: f0a6630a01d124a4684dc845b5a93cd2, type: 3}
+      propertyPath: _options.tileMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 4b3c10255f0fe2d4582fe0764de85a8f, type: 2}
     - target: {fileID: 8610454541067591575, guid: f0a6630a01d124a4684dc845b5a93cd2, type: 3}
       propertyPath: _options.extentOptions.extentType
       value: 1

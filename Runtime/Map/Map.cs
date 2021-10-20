@@ -178,11 +178,6 @@ namespace Map
       {
         if (tile.TryGetComponent<MeshRenderer>(out var tileRenderer))
         {
-          var material = tileRenderer.material;
-          var tileTexture = material.mainTexture;
-          material = mapTileMaterial;
-          tileRenderer.material = material;
-          material.mainTexture = tileTexture;
           tileRenderer.material.SetVector(MapCenter, transform.position);
           tileRenderer.material.SetFloat(MaxDistance, maxDistance);
           tileRenderer.material.SetFloat(FalloffRange, falloffRange);
