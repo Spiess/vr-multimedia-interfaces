@@ -7,6 +7,8 @@ namespace Map
   {
     public Transform pinModel;
 
+    public bool destroyOnDrop = true;
+
     private Minimap _minimap;
     private Map _map;
 
@@ -75,6 +77,10 @@ namespace Map
       else if (_map != null)
       {
         _map.AddPin(this);
+      }
+      else if (destroyOnDrop)
+      {
+        Destroy(gameObject);
       }
     }
   }

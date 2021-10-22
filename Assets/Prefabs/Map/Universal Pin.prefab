@@ -76,6 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pinModel: {fileID: 7022304577585609465}
+  destroyOnDrop: 1
 --- !u!1 &7022304577585609464
 GameObject:
   m_ObjectHideFlags: 0

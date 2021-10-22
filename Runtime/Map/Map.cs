@@ -7,8 +7,7 @@ using UnityEngine;
 namespace Map
 {
   /// <summary>
-  /// The <c>Map</c> allows the user to drop <see cref="Pin"/>s to choose locations. The user interacts with the map
-  /// using a <see cref="MapInteractor"/>.
+  /// The <c>Map</c> allows the user to drop <see cref="UniversalPin"/>s to choose locations.
   /// </summary>
   [RequireComponent(typeof(BoxCollider)), RequireComponent(typeof(Rigidbody))]
   public class Map : MonoBehaviour
@@ -34,8 +33,8 @@ namespace Map
     public float falloffRange;
 
     /// <summary>
-    /// The <c>velocityCenter</c> is used to smoothly pan the map. <see cref="MapInteractor"/>s add a force to this
-    /// when letting go.
+    /// The <c>velocityCenter</c> is used to smoothly pan the map.
+    /// Currently unused except for debugging purposes.
     /// </summary>
     public Rigidbody velocityCenter;
 
@@ -174,7 +173,8 @@ namespace Map
       Gizmos.color = Color.white;
       var size = (maxDistance + falloffRange) * 2;
       var t = transform;
-      Gizmos.DrawWireCube(t.position, new Vector3(size, t.localScale.y * colliderDepth, size));
+      var localScale = t.localScale;
+      Gizmos.DrawWireCube(t.position - t.up * 5 * localScale.y, new Vector3(size, localScale.y * colliderDepth, size));
     }
 
     private void OnDrawGizmosSelected()
@@ -183,7 +183,8 @@ namespace Map
       Gizmos.color = Color.white;
       var size = maxDistance * 2;
       var t = transform;
-      Gizmos.DrawWireCube(t.position, new Vector3(size, t.localScale.y * colliderDepth, size));
+      var localScale = t.localScale;
+      Gizmos.DrawWireCube(t.position - t.up * 5 * localScale.y, new Vector3(size, localScale.y * colliderDepth, size));
     }
 
     #region Interactions
@@ -325,7 +326,9 @@ namespace Map
           position = (position - mapPosition).normalized * maximumPinDistance + mapPosition;
         }
 
-        pin.transform.position = position + transform.up * .01f;
+        var transform1 = transform;
+        pin.transform.position = position + transform1.up * .009f;
+        pin.transform.rotation = transform1.rotation * Quaternion.Euler(90, 0, 0);
       }
     }
 

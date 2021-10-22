@@ -12,7 +12,6 @@ namespace Map
 
     private void Start()
     {
-      InstantiatePin();
       _previousPosition = transform.position;
     }
 
@@ -35,7 +34,7 @@ namespace Map
       }
 
       // Prevent spawning of new pins while the box is being moved
-      if (Vector3.Distance(_pin.position, GetExpectedPinPosition()) > Vector3.kEpsilon)
+      if (_pin == null || Vector3.Distance(_pin.position, GetExpectedPinPosition()) > Vector3.kEpsilon)
       {
         InstantiatePin();
       }
