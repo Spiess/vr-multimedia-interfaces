@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Map
@@ -11,7 +10,23 @@ namespace Map
 
     public Map map;
 
-    private Dictionary<UniversalPin, Vector3> _pins = new Dictionary<UniversalPin, Vector3>();
+    private readonly Dictionary<UniversalPin, Vector3> _pins = new Dictionary<UniversalPin, Vector3>();
+
+    private void OnDisable()
+    {
+      foreach (var pin in _pins.Keys)
+      {
+        pin.gameObject.SetActive(false);
+      }
+    }
+
+    private void OnEnable()
+    {
+      foreach (var pin in _pins.Keys)
+      {
+        pin.gameObject.SetActive(true);
+      }
+    }
 
     private void Update()
     {
@@ -46,7 +61,7 @@ namespace Map
       var t = transform;
       foreach (var pin in _pins.Keys)
       {
-        pin.transform.position = (t.rotation * _pins[pin]) + t.position;
+        pin.transform.position = t.rotation * _pins[pin] + t.position;
       }
     }
   }

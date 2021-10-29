@@ -99,6 +99,22 @@ namespace Map
       Zoom = Zoom;
     }
 
+    private void OnDisable()
+    {
+      foreach (var pin in _pins.Keys)
+      {
+        pin.gameObject.SetActive(false);
+      }
+    }
+
+    private void OnEnable()
+    {
+      foreach (var pin in _pins.Keys)
+      {
+        pin.gameObject.SetActive(true);
+      }
+    }
+
     private void Update()
     {
       // Handle interactions

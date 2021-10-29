@@ -14,6 +14,16 @@ namespace Map
     {
       _previousPosition = transform.position;
     }
+    
+    private void OnDisable()
+    {
+      if (_pin != null) _pin.gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+      if (_pin != null) _pin.gameObject.SetActive(true);
+    }
 
     private void Update()
     {
