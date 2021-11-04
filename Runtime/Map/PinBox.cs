@@ -12,7 +12,9 @@ namespace Map
 
     private void Start()
     {
-      _previousPosition = transform.position;
+      var t = transform;
+      _previousPosition = t.position;
+      _previousRotation = t.rotation;
     }
     
     private void OnDisable()
