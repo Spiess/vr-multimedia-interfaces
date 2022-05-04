@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Mapbox.Unity.Map;
 using Mapbox.Utils;
 using UnityEngine;
@@ -79,7 +80,7 @@ namespace Map
 
     public float colliderDepth = 10;
 
-    private void Start()
+    private async void Start()
     {
       _mapboxRoot = GetComponentInChildren<AbstractMap>();
 
@@ -96,6 +97,7 @@ namespace Map
       UpdateTileShader();
 
       // Make sure that the map shows the correct starting Zoom level (unsure why this is necessary)
+      await Task.Yield();
       Zoom = Zoom;
     }
 
